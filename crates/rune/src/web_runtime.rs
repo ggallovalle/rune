@@ -394,6 +394,8 @@ impl<S: 'static> Runtime<S> {
             "ArrowUp" => crate::Key::Up, "ArrowDown" => crate::Key::Down,
             "Home" => crate::Key::Home, "End" => crate::Key::End,
             "PageUp" => crate::Key::PageUp, "PageDown" => crate::Key::PageDown,
+            "PrintScreen" => crate::Key::PrintScreen, "ScrollLock" => crate::Key::ScrollLock,
+            "Pause" => crate::Key::Pause, "Insert" => crate::Key::Insert,
             "Backspace" => crate::Key::Backspace, "Delete" => crate::Key::Delete,
             name if name.chars().count() == 1 && mods.cmd => crate::Key::Command(name.chars().next().unwrap().to_ascii_lowercase()),
             _ => return false,

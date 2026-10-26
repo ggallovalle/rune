@@ -381,6 +381,14 @@ pub enum Key {
     Command(char),
     /// A function key, F1 through F24. Text fields ignore it; apps can bind it.
     Function(u8),
+    /// Print Screen / SysRq. Often the dual of F10–F12 on laptop Fn rows.
+    PrintScreen,
+    /// Scroll Lock.
+    ScrollLock,
+    /// Pause / Break.
+    Pause,
+    /// Insert. Often the dual of another Fn-row or navigation key.
+    Insert,
     /// A modifier key going down (`pressed`) or up on its own, sent only where the app opts in
     /// with `App::modifier_keys` (or `Runtime::set_modifier_keys`). `mods` holds the modifiers
     /// after the change, as AppKit's flagsChanged does: Shift's press has `shift` set and its
@@ -2161,7 +2169,12 @@ impl TextEdit {
                 }
                 _ => {}
             },
-            Key::Function(_) | Key::Modifier { .. } => {}
+            Key::Function(_)
+            | Key::PrintScreen
+            | Key::ScrollLock
+            | Key::Pause
+            | Key::Insert
+            | Key::Modifier { .. } => {}
         }
         out
     }
