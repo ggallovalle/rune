@@ -1813,6 +1813,10 @@ pub(crate) fn map_key(key: &WKey, m: ModifiersState) -> Option<KeyEvent> {
             NamedKey::F22 => Key::Function(22),
             NamedKey::F23 => Key::Function(23),
             NamedKey::F24 => Key::Function(24),
+            NamedKey::PrintScreen => Key::PrintScreen,
+            NamedKey::ScrollLock => Key::ScrollLock,
+            NamedKey::Pause => Key::Pause,
+            NamedKey::Insert => Key::Insert,
             _ => return None,
         },
         WKey::Character(c) => {
