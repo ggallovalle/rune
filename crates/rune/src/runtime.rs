@@ -2859,7 +2859,9 @@ impl<S: 'static> Runtime<S> {
             | crate::edit::Key::PrintScreen
             | crate::edit::Key::ScrollLock
             | crate::edit::Key::Pause
-            | crate::edit::Key::Insert => false,
+            | crate::edit::Key::Insert
+            | crate::edit::Key::Named(_)
+            | crate::edit::Key::Keysym(_) => false,
             crate::edit::Key::Command(c) => {
                 matches!(c, 'a' | 'c' | 'x' | 'z')
                     || (matches!(c, 'b' | 'i' | 'u') && self.focused_input().is_some_and(|i| i.edit.format_chord(ev).is_some()))

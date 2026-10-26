@@ -389,6 +389,11 @@ pub enum Key {
     Pause,
     /// Insert. Often the dual of another Fn-row or navigation key.
     Insert,
+    /// A winit `NamedKey` without a dedicated Rune variant (media, brightness, …).
+    /// The string is that variant's Debug name, e.g. `"AudioVolumeMute"`.
+    Named(String),
+    /// Raw XKB keysym from an unidentified platform key (e.g. touchpad toggle).
+    Keysym(u32),
     /// A modifier key going down (`pressed`) or up on its own, sent only where the app opts in
     /// with `App::modifier_keys` (or `Runtime::set_modifier_keys`). `mods` holds the modifiers
     /// after the change, as AppKit's flagsChanged does: Shift's press has `shift` set and its
@@ -2174,6 +2179,8 @@ impl TextEdit {
             | Key::ScrollLock
             | Key::Pause
             | Key::Insert
+            | Key::Named(_)
+            | Key::Keysym(_)
             | Key::Modifier { .. } => {}
         }
         out

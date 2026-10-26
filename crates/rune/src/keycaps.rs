@@ -148,6 +148,8 @@ fn key_label(ev: &KeyEvent) -> (String, bool) {
         Key::ScrollLock => "ScrLk".into(),
         Key::Pause => "Pause".into(),
         Key::Insert => "Ins".into(),
+        Key::Named(name) => name.clone(),
+        Key::Keysym(id) => format!("U{id:x}"),
         // Its own flag is already in `mods`.
         Key::Modifier { modifier: crate::Modifier::Fn, .. } => "fn".into(),
         Key::Modifier { .. } => return (mod_glyphs(m), false),

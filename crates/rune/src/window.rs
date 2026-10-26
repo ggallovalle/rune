@@ -12,7 +12,7 @@ use winit::event::{ElementState, Ime as WIme, MouseButton, StartCause, TouchPhas
 use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoopProxy};
 #[cfg(not(target_arch = "wasm32"))]
 use winit::event_loop::EventLoop;
-use winit::keyboard::{Key as WKey, ModifiersState, NamedKey};
+use winit::keyboard::{Key as WKey, ModifiersState, NamedKey, NativeKey};
 use winit::window::{Theme, Window, WindowId, WindowLevel};
 use winit::raw_window_handle::HasWindowHandle;
 
@@ -1817,7 +1817,8 @@ pub(crate) fn map_key(key: &WKey, m: ModifiersState) -> Option<KeyEvent> {
             NamedKey::ScrollLock => Key::ScrollLock,
             NamedKey::Pause => Key::Pause,
             NamedKey::Insert => Key::Insert,
-            _ => return None,
+            // Fn-row duals / media / brightness / etc.: keep the winit name so apps can bind them.
+            other => Key::Named(format!("{other:?}")),
         },
         WKey::Character(c) => {
             if mods.cmd {
@@ -1826,6 +1827,8 @@ pub(crate) fn map_key(key: &WKey, m: ModifiersState) -> Option<KeyEvent> {
                 Key::Text(c.to_string())
             }
         }
+        // Touchpad toggle and other keys winit has no NamedKey for.
+        WKey::Unidentified(NativeKey::Xkb(keysym)) if *keysym != 0 => Key::Keysym(*keysym),
         _ => return None,
     };
     Some(KeyEvent { key, mods })
